@@ -116,12 +116,12 @@ class textHighlight {
     #markText() { 
         let txt = this.ele.value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         if (this.searchArg) { console.log(this.ele.value)
-            
-            let searchArg = this.searchArg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            let boundary = this.word ? '\\b' : '';
-
-            let re = new RegExp(boundary + '(' + this.#escapeString(searchArg) + ')' + boundary, 'g' + (this.sensitive ? '' : 'i')); 
-            return txt.replace(re, '<mark>$&</mark>');
+            let re = new RegExp(this.searchArg); 
+            var tmp = txt.split('\n')
+            for (var i = 0; i < tmp.length; i++) {
+                tmp[i] = tmp[i].replace(re, '<mark>$&</mark>');
+            }
+            return tmp.join('\n')
         } else {
             return txt;
         }
